@@ -1,39 +1,50 @@
 // Copyright 2022 NNTU-CS
-
 #include <cstdint>
 #include "alg.h"
 double pown(double value, uint16_t n) {
-  double x = 1;
-    for (uint16_t i = 1; i <= n; i++) {
-        x = x * value;
+    double a = 1;
+    for (int i = 1; i <= n; i++) {
+        a = a * value;
     }
-    return x;
+    return a;
 }
 uint64_t fact(uint16_t n) {
-  uint64_t x = 1;
-    if (n == 1) {
-        return 1;
-    } else {
-        for (uint16_t i = 1; i <= n; i++) {
-            x = x * i;
-        }
+    uint64_t a = 1;
+    while (n != 0) {
+        a = a * n;
+        n--;
     }
-    return x;
+    return a;
 }
 double calcItem(double x, uint16_t n) {
-  double f = fact(n);
-    double st = pown(x, n);
-    double res = st / f;
-    return (res);
- }
-
+    double a = pown(x, n) / fact(n);
+    return a;
+}
  double expn(double x, uint16_t count) {
-   double k = 0;
-   double k = 1;
-     for (uint16_t i = 1; i <= count; i++) {
-         k = k + calcItem(x, i);
+     double e = 0;
+     uint64_t c = 0;
+     while (c <= count) {
+         e += pown(x, c) / fact(c);
+         c += 1;
      }
-    return k;
+    return  e;
+}
+double sinn(double x, uint16_t count) {
+    double e = 0;
+    for (uint16_t c = 1; c <= count; c++) {
+        e += pown(-1, c-1) * (pown(x, (2 * c)-1) / fact((2 * c) - 1));
+    }
+    return  e;
+}
+double cosn(double x, uint16_t count) {
+    double e = 0;
+    uint64_t c = 1;
+    while (c <= count) {
+        e += pown(-1, c - 1) * pown(x, (2 * c) - 2) / fact((2 * c) - 2);
+        c += 1;
+    }
+    return  e;
+}
 }
 double sinn(double x, uint16_t count) {
   double k = 0;
