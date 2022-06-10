@@ -1,55 +1,60 @@
 #include <cstdint>
 #include "alg.h"
 
+double pown(double value, uint16_t n) {
 
- double pown(double value, uint16_t n) {
-
-     double res = 1.0;
-     for (int i = 1; i <= n; i++) {
-         res = res * value;
+   uint16_t i = n;
+     double c = value;
+     if (n == 0) {
+         return 1;
      }
-     return res;
- }
-
- uint64_t fact(uint16_t n) {
-
-     uint64_t res = 1;
-     for (int i = 1; i <= n; i++) {
-         res = res * i;
+     while (i != 1) {
+         c*=value;
+         i--;
      }
-     return res;
- }
+     return c;
+}
 
- double calcItem(double x, uint16_t n) {
+uint64_t fact(uint16_t n) {
 
-     double ans = pown(x, n) / fact(n);
-     return ans;
- }
-
- double expn(double x, uint16_t count) {
-
-     double ex = 0;
-     for (int i = 1; i <= count; i++) {
-         ex = ex + (pown(x, i) / fact(i));
+   uint64_t b = 1;
+     for (int i = n; i != 0; i--) {
+         b *= i;
      }
-     ex = ex + 1;
-     return ex;
- }
+     return b;
+}
 
- double sinn(double x, uint16_t count) {
+double calcItem(double x, uint16_t n) {
 
-     double s = 0;
+   double a = pown(x, n) / fact(n);
+     return a;
+}
+
+double expn(double x, uint16_t count) {
+
+   double a = 1;
+     int n = 1;
+     while (count > n-1) {
+         a += calcItem(x, n);
+         n++;
+     }
+     return a;
+}
+
+double sinn(double x, uint16_t count) {
+
+   double a = 0;
      for (uint16_t i = 1; i <= count; i++) {
-         s = s + (pown(-1, i - 1) * calcItem(x, (2 * i) - 1));
+         a += pown(-1, (i - 1)) * calcItem(x, (2 * i - 1));
      }
-     return s;
- }
+     return a;
+}
 
- double cosn(double x, uint16_t count) {
+double cosn(double x, uint16_t count) {
 
-     double s = 0;
-     for (int i = 1; i <= count; i++) {
-         s = s + (pown(-1, (i - 1)) * calcItem(x, (2 * i) - 2));
+   double a = 0;
+     for (uint16_t i = 1; i <= count; i++) {
+         a += pown(-1, (i - 1)) * calcItem(x, (2 * i - 2));
      }
-     return s;
- }
+     return a;
+}
